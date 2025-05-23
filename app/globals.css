@@ -1,0 +1,587 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Gizli scrollbar için CSS */
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE ve Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Navbar için özel yükseklik */
+  .h-18 {
+    height: 4.5rem;
+  }
+  
+  .pt-18 {
+    padding-top: 4.5rem;
+  }
+}
+
+/* Modern pastel tema */
+:root {
+  /* Ana tema renkleri - Açık ve Profesyonel (Siyah Ana Renk) */
+  --primary: #111827; /* Tailwind Gray-900 (Siyaha yakın koyu gri, ana renk) */
+  --primary-hover: #1F2937; /* Tailwind Gray-800 (Hover için biraz daha açık) */
+  --primary-foreground: #FFFFFF; /* Koyu primary üzerinde beyaz metin */
+  
+  --secondary: #4B5563; /* Tailwind Gray-600 (İkincil renk, nötr gri) */
+  --accent: #06B6D4; /* Tailwind Cyan-500 (Vurgu rengi canlı kalabilir veya değiştirilebilir) */
+  --accent-foreground: #FFFFFF; /* Vurgu rengi üzerinde beyaz metin */
+
+  /* Metin renkleri */
+  --foreground: #1F2937; /* Tailwind Gray-800 - Ana metin rengi (primary ile aynı olabilir) */
+  --foreground-muted: #6B7280; /* Tailwind Gray-500 - Orta gri metin */
+  
+  /* Arka plan renkleri - Açık tonlar (Aynı kalacak) */
+  --background: #F9FAFB; /* Tailwind Gray-50 - Çok açık gri ana arka plan */
+  --background-surface: #FFFFFF; /* Saf Beyaz - Kartlar, modallar vb. için yüzey */
+  --background-surface-hover: #F3F4F6; /* Tailwind Gray-100 - Yüzey üzerine gelindiğinde */
+  --background-secondary: #E5E7EB; /* Tailwind Gray-200 - İkincil, biraz daha koyu arka planlar */
+  
+  /* UI elementleri */
+  --border: #D1D5DB; /* Tailwind Gray-300 - Kenarlıklar */
+  --border-hover: #9CA3AF; /* Tailwind Gray-400 */
+  --radius: 0.75rem;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.06); 
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  
+  /* Işıma efektleri */
+  --primary-glow: 0 0 15px rgba(31, 41, 55, 0.2); /* Koyu gri ışıması */
+  --accent-glow: 0 0 15px rgba(6, 182, 212, 0.2); /* Vurgu rengi ışıması aynı kalabilir */
+  
+  /* Gradientler (Siyah/Gri tonlarına güncellendi) */
+  --gradient-pastel: linear-gradient(135deg, #374151, #111827); /* Gray-700 to Gray-900 */
+  --gradient-soft: linear-gradient(135deg, #9CA3AF, #6B7280); /* Gray-400 to Gray-500 */
+  --gradient-blue: linear-gradient(135deg, #1F2937, #111827); /* Gray-800 to Gray-900 (Artık mavi değil) */
+
+  /* Shadcn/ui veya benzeri temalarla uyumlu olabilecek diğer değişkenler */
+  --card: var(--background-surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--background-surface);
+  --popover-foreground: var(--foreground);
+  /* --primary-foreground zaten yukarıda tanımlandı */
+  --secondary-foreground: #FFFFFF; 
+  --muted: var(--background-secondary);
+  --muted-foreground: var(--foreground-muted);
+  /* --accent-foreground zaten yukarıda tanımlandı */
+  --destructive: #DC2626; /* Tailwind Red-600 */
+  --destructive-foreground: #FFFFFF;
+  --input: var(--background-surface);
+  --ring: var(--primary); /* Odak halkası artık koyu gri olacak */
+
+  /* Grafik renkleri (Ana renk değiştiği için bunlar da gözden geçirilebilir, şimdilik aynı) */
+  --chart-1: #374151; /* Primary Gray */
+  --chart-2: #10B981; 
+  --chart-3: #F59E0B; 
+  --chart-4: #EF4444; 
+  --chart-5: #6366F1; /* Bu hala bir miktar mavi/mor, isteğe bağlı değiştirilebilir */
+}
+
+/* Koyu tema seçeneği KALDIRILDI */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  overflow-x: hidden;
+  /* Açık tema için body üzerindeki radial-gradient'leri de kaldırabilir veya açık temaya uygun hale getirebiliriz.
+     Şimdilik varsayılan arka plan renginin baskın olması için bunları yorum satırına alıyorum.
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+  */
+}
+
+/* Navbar animasyonları */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+.animate-pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  background: var(--gradient-pastel);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.2));
+}
+
+h2 {
+  font-size: 2.5rem;
+  position: relative;
+  margin-top: 2rem;
+  color: var(--foreground);
+}
+
+h2::after {  content: '';  position: absolute;  left: 0;  bottom: -10px;  height: 3px;  width: 60px;  background-color: var(--primary);  border-radius: 2px;}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Navbar */
+.navbar {
+  background-color: rgba(248, 250, 252, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  background: var(--gradient-pastel);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-menu a {
+  color: var(--foreground);
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-menu a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.navbar-menu a:hover {
+  color: var(--primary);
+}
+
+.navbar-menu a:hover::after {
+  width: 100%;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: var(--shadow);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card::after {  content: '';  position: absolute;  top: -50%;  right: -50%;  width: 200%;  height: 200%;  background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.08), transparent);  transform: rotate(45deg) translateX(-100%);  transition: transform 0.6s ease;  opacity: 0;}
+
+.card:hover::after {  transform: rotate(45deg) translateX(100%);  opacity: 1;}
+
+/* Forms */
+input, select, textarea {
+  background-color: var(--background-surface);
+  border: 2px solid var(--border);
+  color: var(--foreground);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero {
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  animation: float 10s ease-in-out infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  animation: float 15s ease-in-out infinite reverse;
+}
+
+/* Feature section */
+.features {
+  padding: 80px 0;
+  position: relative;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes shimmer {
+  0% { 
+    background-position: -200% 0;
+  }
+  100% { 
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Futuristic table */
+.table-container {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--background-surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th {  background-color: var(--primary);  color: white;  text-align: left;  padding: 1rem;  font-weight: 600;  text-transform: uppercase;  font-size: 0.8rem;  letter-spacing: 1px;}
+
+td {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  transition: background-color 0.2s ease;
+}
+
+tr:hover td {
+  background-color: var(--background-surface-hover);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .navbar-menu {
+    display: none;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* Utility classes */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.text-muted {
+  color: var(--foreground-muted);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-gradient {
+  background: var(--gradient-pastel);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-lg {
+  max-width: 32rem;
+}
+
+/* Pastel glow effects */
+.pastel-glow {
+  box-shadow: var(--primary-glow);
+}
+
+.border-glow {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 20px var(--primary);
+  border-color: var(--border-hover) !important;
+}
+
+/* Modern hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Background patterns */
+.bg-pattern {
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+}
+
+/* Text shadow utility classes */
+.text-shadow-blue {
+  text-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+.text-shadow-soft {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+} 
